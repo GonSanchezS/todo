@@ -10,5 +10,6 @@ tasks = Task.create([
   { title: 'Do laundry', done: false },
   { title: 'Make bed', done: false },
   { title: 'Write code', done: false },
-  { title: 'Send flowers', done: false }
+  { title: 'Send flowers', done: false },
+  { title: 'Get haircut', done: true }
 ])
