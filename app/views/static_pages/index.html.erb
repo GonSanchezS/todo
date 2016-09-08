@@ -1,17 +1,26 @@
 <section class="todoapp">
   <header class="header">
     <h1>todos</h1>
-    </header>
+    <form id="new-form">
+      <input type="text" class="new-todo" />
+    </form>
+  </header>
 
-    <section class="main">
-      <ul class="todo-list">
+  <section class="main">
+    <ul class="todo-list">
 
-      </ul>
-    </section>
+    </ul>
+  </section>
 </section>
 
 <script>
   $(function() {
+    $('#new-form').submit(function(event) {
+      event.preventDefault();
+      var textbox = $('.new-todo');
+      console.log("Task: ", textbox.val());
+    });
+
     // The taskHtml method takes in a Javascript representation
     // of the task and produces an HTML respresentation using
     // <li> tags
@@ -28,6 +37,24 @@
         return liElement;
     }
 
+    // toggleTask takes in an HTML representation of
+    // an event that fires from an HTML representation of
+    // the toggle checkbox and performs an API request to
+    // toggle the value of the 'done' field
+
+    function toggleTask(e) {
+      var itemId = $(e.target).data('id');
+
+      var doneValue = Boolean($(e.target).is(':checked'));
+
+      $.post("/tasks/" + itemId, {
+        _method: 'PUT',
+        task: {
+          done: doneValue
+        }
+      });
+    }
+
     $.get('/tasks').success( function (data) {
       var htmlString = "";
 
@@ -37,22 +64,8 @@
       var ulTodos = $('.todo-list'); // Grab the .todo-list element
       ulTodos.html(htmlString);
 
-      $('.toggle').change(function(e) {
-        var itemId = $(e.target).data('id');
-        console.log(itemId);
-
-        var doneValue = Boolean($(e.target).is(':checked'));
-        console.log('done:', doneValue);
-
-        $.post("/tasks/" + itemId, {
-          _method: 'PUT',
-          task: {
-            done: doneValue
-          }
-        });
-
-      });
-
+      $('.toggle').change(toggleTask);
+        
     });
   });
 </script>
