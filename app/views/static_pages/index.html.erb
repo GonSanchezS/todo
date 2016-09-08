@@ -12,18 +12,27 @@
 
 <script>
   $(function() {
-    $.get('/tasks').success( function (data) {
-      var htmlString = "";
+    // The taskHtml method takes in a Javascript representation
+    // of the task and produces an HTML respresentation using
+    // <li> tags
 
-      $.each(data, function(index, task) {
-        var checkedStatus = task.done ? "checked" : "";
+    function taskHtml(task) {
+      var checkedStatus = task.done ? "checked" : "";
         var liElement = '<li><div class="view"><input class="toggle" type="checkbox"' + 
         ' data-id="' + task.id + '"' +
         checkedStatus + 
         '><label>' + 
         task.title + 
         '</label></div></li>';
-        htmlString += liElement; // Append each task to htmlString after it loops
+
+        return liElement;
+    }
+
+    $.get('/tasks').success( function (data) {
+      var htmlString = "";
+
+      $.each(data, function(index, task) {        
+        htmlString += taskHtml(task); // Append each task to htmlString after it loops
       });
       var ulTodos = $('.todo-list'); // Grab the .todo-list element
       ulTodos.html(htmlString);
