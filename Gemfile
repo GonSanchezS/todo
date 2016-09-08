@@ -30,6 +30,9 @@ gem 'jbuilder', '~> 1.2'
 # Add rails12factor
 gem 'rails_12factor', group: :production
 
+# Add paloma
+gem 'paloma', '~> 5.0.0'
+
 # Add rspec
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'

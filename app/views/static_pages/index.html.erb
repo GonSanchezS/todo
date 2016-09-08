@@ -1,82 +1,27 @@
 <section class="todoapp">
   <header class="header">
-    <h1>todos</h1>
+    <script src="https://use.typekit.net/hkj4mqq.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Roboto:400,700" rel="stylesheet">
+    <h1>Rise Up</h1>
+    <h2><%= Date.today %></h2> 
+      <br />
     <form id="new-form">
-      <input type="text" class="new-todo" />
+      <input type="text" class="new-todo"  placeholder="Type here: What needs to be done?" autofocus/>
     </form>
   </header>
-
   <section class="main">
+  <br />
     <ul class="todo-list">
 
     </ul>
   </section>
 </section>
 
-<script>
-  $(function() {
-    // The taskHtml method takes in a Javascript representation
-    // of the task and produces an HTML respresentation using
-    // <li> tags
-
-    function taskHtml(task) {
-      var checkedStatus = task.done ? "checked" : "";
-        var liElement = '<li><div class="view"><input class="toggle" type="checkbox"' + 
-        ' data-id="' + task.id + '"' +
-        checkedStatus + 
-        '><label>' + 
-        task.title + 
-        '</label></div></li>';
-
-        return liElement;
-    }
-
-    // toggleTask takes in an HTML representation of
-    // an event that fires from an HTML representation of
-    // the toggle checkbox and performs an API request to
-    // toggle the value of the 'done' field
-
-    function toggleTask(e) {
-      var itemId = $(e.target).data('id');
-
-      var doneValue = Boolean($(e.target).is(':checked'));
-
-      $.post("/tasks/" + itemId, {
-        _method: 'PUT',
-        task: {
-          done: doneValue
-        }
-      });
-    }
-
-    $.get('/tasks').success( function (data) {
-      var htmlString = "";
-
-      $.each(data, function(index, task) {        
-        htmlString += taskHtml(task); // Append each task to htmlString after it loops
-      });
-      var ulTodos = $('.todo-list'); // Grab the .todo-list element
-      ulTodos.html(htmlString);
-
-      $('.toggle').change(toggleTask);
-        
-    });
-
-    $('#new-form').submit(function(event) {
-      event.preventDefault(); // Prevents from loading
-      var textbox = $('.new-todo'); // Grabs the HTML area
-      var payload = {
-        task: {
-          title: textbox.val()
-        }
-      };
-      $.post('/tasks', payload).success( function (data) {
-        var htmlString = taskHtml(data)
-        var ulTodos = $('.todo-list');
-        ulTodos.append(htmlString);
-        $('.toggle').click(toggleTask);
-      })
-    });
-
-  });
-</script>
+  <br />
+<section class="author">
+  Just another <%= link_to "todo-mvc", "http://todomvc.com" %>
+  app, built by
+  <%= link_to "@gonsanchezs", "http://github.com/gonsanchezs" %><i class="em em-v"></i>
+</section>

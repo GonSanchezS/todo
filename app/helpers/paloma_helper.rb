@@ -1,0 +1,2 @@
+module PalomaHelper
+end
